@@ -1,11 +1,8 @@
-
-!pip install pandas matplotlib seaborn -q
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
+# Stil sozlash
 sns.set_theme(style="whitegrid")
 plt.rcParams["figure.figsize"] = (10, 5)
 
@@ -18,9 +15,11 @@ df = pd.read_csv(url)
 print("Dataset o'lchami:", df.shape)
 print("\nUstunlar:", df.columns.tolist())
 print("\nDastlabki 5 qator:")
-display(df.head())
+print(df.head())
 
-
+# ======================
+# 2. Asosiy filtrlar
+# ======================
 print("\n" + "="*40)
 print("FILTR NATIJALARI")
 print("="*40)
@@ -37,28 +36,34 @@ print("Sales > 500:", len(high_sales))
 print("Zarar ko'rganlar:", len(loss))
 print("West + Consumer:", len(west_consumer))
 
+# ======================
+# 3. Grafiklar
+# ======================
 
 # 1-grafik: Region bo'yicha Sales
 plt.figure()
 region_sales = df.groupby("region")["sales"].sum().sort_values(ascending=False)
 sns.barplot(x=region_sales.index, y=region_sales.values, hue=region_sales.index, palette="viridis", legend=False)
-plt.title("Region bo'yicha umumiy Sales", fontsize=14)
+plt.title("Region bo'yicha umumiy Sales")
 plt.ylabel("Sales ($)")
+plt.tight_layout()
 plt.show()
 
 # 2-grafik: Category bo'yicha Profit
 plt.figure()
 cat_profit = df.groupby("category")["profit"].sum().sort_values(ascending=False)
 sns.barplot(x=cat_profit.index, y=cat_profit.values, hue=cat_profit.index, palette="coolwarm", legend=False)
-plt.title("Category bo'yicha umumiy Profit", fontsize=14)
+plt.title("Category bo'yicha umumiy Profit")
 plt.ylabel("Profit ($)")
+plt.tight_layout()
 plt.show()
 
 # 3-grafik: Segment bo'yicha Sales (Pie)
-plt.figure(figsize=(7,7))
+plt.figure(figsize=(7, 7))
 segment_sales = df.groupby("segment")["sales"].sum()
 plt.pie(segment_sales, labels=segment_sales.index, autopct="%1.1f%%", startangle=90)
-plt.title("Segment bo'yicha Sales ulushi", fontsize=14)
+plt.title("Segment bo'yicha Sales ulushi")
+plt.tight_layout()
 plt.show()
 
 print("\nTahlil tugadi!")
